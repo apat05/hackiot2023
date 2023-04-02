@@ -12,6 +12,8 @@ def person_detected():
 
 
 def main():
+    #call counter from display.py
+    
 
 
 
