@@ -1,4 +1,5 @@
 import lcd
+from lcd import lcd_init, lcd_string, lcd_byte
 #import face
 
 import RPi.GPIO as GPIO
@@ -27,29 +28,36 @@ E_DELAY = 0.00005
 
 def main():
 
-<<<<<<< HEAD
+
     lcd.init()    
     lcd.GPIO.cleanup() 
-=======
-    lcd_init()
 
->>>>>>> fddc9afbd90432488d1918f7a39cdef68cab6004
+    GPIO.output(LED_ON, True)
+    time.sleep(1)
+    GPIO.output(LED_ON, False)
+    time.sleep(1)
+    GPIO.output(LED_ON, True)
+    time.sleep(1)
+
+
     people = [0, 0, 0, 0]
     default_range = ultrasonic()
 
-    while True:
+#    while True:
         #outputting the string information to the screen
-        lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
-        range = ultrasonic()
-        if(range < default_range):
+    lcd_byte(LCD_LINE_1, LCD_CMD)
+    lcd_string("A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
+    time.sleep(3)
+    range = ultrasonic()
+    if(range < default_range):
             #use the camera, identify the person, and increment their counter
-            id = 0 #numeric value returned by facial recognition software
+        id = 0 #numeric value returned by facial recognition software
 
             #increment the identified person's number
-            people[id] += 1
+        people[id] += 1
         
-        while range != default_range: #so that the counter doesn't continue to update while person is putting dish in
-            range = ultrasonic()
+    while range != default_range: #so that the counter doesn't continue to update while person is putting dish in
+        range = ultrasonic()
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
@@ -75,7 +83,7 @@ def ultrasonic():
 
     return distance
 
-def lcd_start:
+
 
 
                 
