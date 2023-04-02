@@ -34,6 +34,7 @@ def main():
 
     while True:
         #outputting the string information to the screen
+        time.sleep(.1)
         lcd_byte(LCD_LINE_1, LCD_CMD)
         lcd_string(f"A: {people[0]} Q: {people[1]} K: {people[2]} R: {people[3]}", 1)
         range = ultrasonic()
