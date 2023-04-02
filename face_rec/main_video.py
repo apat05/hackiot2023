@@ -12,7 +12,9 @@ def captureimage():
    # sfr.load_encoding_images("face_rec/images/")
 
     # Load Camera
+
     camera = PiCamera()
+    camera.resolution = (2592, 1944)
    # camera.resolution = (640, 480)
     rawCapture = PiRGBArray(camera)
     time.sleep(0.1)
