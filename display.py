@@ -34,12 +34,8 @@ def main():
 
     while True:
         #outputting the string information to the screen
-<<<<<<< HEAD
-        lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
-=======
         lcd_byte(LCD_LINE_1, LCD_CMD)
         lcd_string(f"A: {people[0]} Q: {people[1]} K: {people[2]} R: {people[3]}", 1)
->>>>>>> 8ff47d1c8e28547c2f8d6922c6c72cf1d5ddfb73
         range = ultrasonic()
         if((range < default_range - 10) and (range > 10)):
             #use the camera, identify the person, and increment their counter
@@ -48,7 +44,6 @@ def main():
             #increment the identified person's number
             people[id] += 1
         
-<<<<<<< HEAD
     #    while range != default_range: #so that the counter doesn't continue to update while person is putting dish in
      #       range = ultrasonic()
 =======
