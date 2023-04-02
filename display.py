@@ -3,6 +3,7 @@
 #import
 import RPi.GPIO as GPIO
 import time
+from face_rec import main_video
 
 # Define GPIO to LCD mapping
 LCD_RS = 26
@@ -49,19 +50,20 @@ def main():
         range = ultrasonic()
 
         if((range < default_range - 10) and (range > 10)):
-            #use the camera, identify the person, and increment their counter
-            id = 0 #numeric value returned by facial recognition software
+            idx = main_video.capture()
+
 
             #increment the identified person's number
-            people[id] += 1
-        
+            people[idx] += 1
         while range < default_range - 10 and range > 0: #so that the counter doesn't continue to update while person is putting dish in
+
             range = ultrasonic()
 
         #reset button
         buttonPress = GPIO.input(buttonPin)
-        if(buttonPress == False): 
-            people[id] = 0
+        if(buttonPress == False):
+            idx = main_video.capture()  # assign index based on name from face software
+            people[idx] = 0
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
