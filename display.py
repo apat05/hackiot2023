@@ -25,17 +25,15 @@ LCD_LINE_2 = 0xC0 # LCD RAM address for the 2nd line
 E_PULSE = 0.00005
 E_DELAY = 0.00005
 
-#Dish cap
-MAX_DISHES = 7
-
 def main():
 
+    GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
     lcd_init()
     GPIO.cleanup()
 
     buttonPin = 23
 
-    GPIO.setup(buttonPin, GPIO.IN)
+    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     people = [0, 0, 0, 0]
     default_range = 40
 
@@ -59,15 +57,6 @@ def main():
         
         while range < default_range - 10 and range > 0: #so that the counter doesn't continue to update while person is putting dish in
             range = ultrasonic()
-    hit_cap(people)
-            
-def hit_cap(people):
-    #if a person hits the cap for max dishes they can have in the sink
-    for person in people:
-        if person >= MAX_DISHES:
-            lcd_byte(LCD_LINE_2, LCD_CMD)
-            lcd_string("{} do your dishes!".format(person))
-            time.sleep(5)
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
@@ -104,7 +93,6 @@ def ultrasonic():
 # Date   : 03/08/2012
 
 def lcd_init():
-  GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
   GPIO.setup(LCD_E, GPIO.OUT)  # E
   GPIO.setup(LCD_RS, GPIO.OUT) # RS
   GPIO.setup(LCD_D4, GPIO.OUT) # DB4
