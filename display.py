@@ -28,18 +28,28 @@ E_DELAY = 0.00005
 def main():
 
     lcd_init()
+    GPIO.cleanup()
 
+    buttonPin = 23
+
+    GPIO.setup(buttonPin, GPIO.IN)
     people = [0, 0, 0, 0]
     default_range = 40
 
     while True:
         #outputting the string information to the screen
+        
+
         lcd_byte(LCD_LINE_1, LCD_CMD)
-        lcd_string(f"A: {people[0]} Q: {people[1]} K: {people[2]} R: {people[3]}", 1)
+        lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
         range = ultrasonic()
         if((range < default_range - 10) and (range > 10)):
             #use the camera, identify the person, and increment their counter
             id = 0 #numeric value returned by facial recognition software
+
+            #reset button
+            if(not GPIO.input(buttonPin)): 
+                people[id] = 0
 
             #increment the identified person's number
             people[id] += 1
