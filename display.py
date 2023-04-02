@@ -1,18 +1,20 @@
 import lcd
-import face
+#import face
 
 def main():
 
+    lcd.init()    
+    lcd.GPIO.cleanup() 
     people = [0, 0, 0, 0]
     default_range = ultrasonic()
 
     while True:
         #outputting the string information to the screen
-        lcd_string("A: " + people[0] + " Q: " + people[1] + " K: " + people[2] + " R: " + people[3], 1)
+        lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
         range = ultrasonic()
         if(range < default_range):
             #use the camera, identify the person, and increment their counter
-            id = #numeric value returned by facial recognition software
+            id = 0 #numeric value returned by facial recognition software
 
             #increment the identified person's number
             people[id] += 1
