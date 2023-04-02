@@ -13,7 +13,7 @@ def captureimage():
 
     # Load Camera
     camera = PiCamera()
-    camera.resolution = (640, 480)
+   # camera.resolution = (640, 480)
     rawCapture = PiRGBArray(camera)
     time.sleep(0.1)
     camera.capture('face_rec/images/image.jpg')
