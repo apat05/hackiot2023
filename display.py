@@ -27,9 +27,9 @@ E_DELAY = 0.00005
 
 def main():
 
+    GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
     lcd_init()
-    GPIO.cleanup()
 
     buttonPin = 23
 
@@ -37,26 +37,31 @@ def main():
     people = [0, 0, 0, 0]
     default_range = 40
 
+    id = 0
+    buttonPress = True
+
     while True:
         #outputting the string information to the screen
-        
+        time.sleep(.1)
 
         lcd_byte(LCD_LINE_1, LCD_CMD)
         lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
         range = ultrasonic()
+
         if((range < default_range - 10) and (range > 10)):
             #use the camera, identify the person, and increment their counter
             id = 0 #numeric value returned by facial recognition software
-
-            #reset button
-            if(not GPIO.input(buttonPin)): 
-                people[id] = 0
 
             #increment the identified person's number
             people[id] += 1
         
         while range < default_range - 10 and range > 0: #so that the counter doesn't continue to update while person is putting dish in
             range = ultrasonic()
+
+        #reset button
+        buttonPress = GPIO.input(buttonPin)
+        if(buttonPress == False): 
+            people[id] = 0
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
