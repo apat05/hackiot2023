@@ -2,7 +2,12 @@
 
 #import
 import RPi.GPIO as GPIO
+import cv2
 import time
+from face_rec import simple_facerec
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+from face_rec import main_video
 
 # Define GPIO to LCD mapping
 LCD_RS = 26
@@ -27,26 +32,42 @@ E_DELAY = 0.00005
 
 def main():
 
+    GPIO.cleanup()
+    GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
     lcd_init()
 
+    buttonPin = 23
+
+    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     people = [0, 0, 0, 0]
     default_range = 40
+
+    id = 0
+    buttonPress = True
 
     while True:
         #outputting the string information to the screen
         time.sleep(.1)
+
         lcd_byte(LCD_LINE_1, LCD_CMD)
-        lcd_string(f"A: {people[0]} Q: {people[1]} K: {people[2]} R: {people[3]}", 1)
+        lcd_string(f"A:{people[0]} Q:{people[1]} K:{people[2]} R:{people[3]}", 1)
         range = ultrasonic()
+        print(range)
         if((range < default_range - 10) and (range > 10)):
-            #use the camera, identify the person, and increment their counter
-            id = 0 #numeric value returned by facial recognition software
+            idx = main_video.capture()
+            print(idx)
 
             #increment the identified person's number
-            people[id] += 1
-        
+            people[idx] += 1
         while range < default_range - 10 and range > 0: #so that the counter doesn't continue to update while person is putting dish in
+
             range = ultrasonic()
+
+        #reset button
+        buttonPress = GPIO.input(buttonPin)
+        if(buttonPress == False):
+            idx = main_video.capture()  # assign index based on name from face software
+            people[idx] = 0
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
@@ -83,7 +104,6 @@ def ultrasonic():
 # Date   : 03/08/2012
 
 def lcd_init():
-  GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
   GPIO.setup(LCD_E, GPIO.OUT)  # E
   GPIO.setup(LCD_RS, GPIO.OUT) # RS
   GPIO.setup(LCD_D4, GPIO.OUT) # DB4
