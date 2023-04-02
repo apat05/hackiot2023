@@ -2,23 +2,25 @@ def captureimage():
     import cv2
     import time
     import face_recognition
-    from face_rec import simple_facerec as sf
+    #from face_rec import simple_facerec as sf
     from picamera.array import PiRGBArray
     from picamera import PiCamera
 
 
     # Encode faces from a folder
-    sfr = sf.SimpleFacerec()
-    sfr.load_encoding_images("face_rec/images/")
+   # sfr = sf.SimpleFacerec()
+   # sfr.load_encoding_images("face_rec/images/")
 
     # Load Camera
     camera = PiCamera()
+    camera.resolution = (640, 480)
     rawCapture = PiRGBArray(camera)
     time.sleep(0.1)
-    camera.capture(rawCapture, format="bgr")
-    image = rawCapture.array
+    camera.capture('face_rec/images/image.jpg')
+    camera.stop_preview()
+    camera.close()
 
-    img = cv2.imread(image)    
+    img = cv2.imread("face_rec/images/image.jpg")    
     rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img_encoding = face_recognition.face_encodings(rgb_img)[0]
 
@@ -62,6 +64,4 @@ def captureimage():
 
     
     cv2.destroyAllWindows()
-    camera.stop_preview()
-    camera.close()
     return idx
