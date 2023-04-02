@@ -1,7 +1,33 @@
 import lcd
 import face
 
+import RPi.GPIO as GPIO
+import time
+
+# Define GPIO to LCD mapping
+LCD_RS = 26
+LCD_E  = 19
+LCD_D4 = 13 
+LCD_D5 = 6
+LCD_D6 = 5
+LCD_D7 = 11
+LED_ON = 15
+
+# Define some device constants
+LCD_WIDTH = 16    # Maximum characters per line
+LCD_CHR = True
+LCD_CMD = False
+
+LCD_LINE_1 = 0x80 # LCD RAM address for the 1st line
+LCD_LINE_2 = 0xC0 # LCD RAM address for the 2nd line 
+
+# Timing constants
+E_PULSE = 0.00005
+E_DELAY = 0.00005
+
 def main():
+
+    lcd_init()
 
     people = [0, 0, 0, 0]
     default_range = ultrasonic()
@@ -12,7 +38,7 @@ def main():
         range = ultrasonic()
         if(range < default_range):
             #use the camera, identify the person, and increment their counter
-            id = #numeric value returned by facial recognition software
+            id = 0 #numeric value returned by facial recognition software
 
             #increment the identified person's number
             people[id] += 1
@@ -24,8 +50,9 @@ def main():
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
 def ultrasonic():
 
-    TRIG = 21
-    ECHO = 20
+    TRIG=21
+    ECHO=20
+
     GPIO.setup(TRIG,GPIO.OUT)
     GPIO.setup(ECHO,GPIO.IN)
     GPIO.output(TRIG,False)
@@ -42,6 +69,9 @@ def ultrasonic():
     distance=round(distance,2)
 
     return distance
+
+def lcd_start:
+
 
                 
 
