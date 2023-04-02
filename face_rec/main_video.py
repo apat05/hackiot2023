@@ -42,16 +42,21 @@ def captureimage():
     rgb_Kevin = cv2.cvtColor(Kevin, cv2.COLOR_BGR2RGB)
     kev_encoding = face_recognition.face_encodings(rgb_Kevin)[0]
 
-    if face_recognition.compare_faces([img_encoding], aum_encoding):
+    if (face_recognition.compare_faces([img_encoding], aum_encoding))[0]:
         idx = 0
-    elif face_recognition.compare_faces([img_encoding], quoc_encoding):
-        idx = 1
-    elif face_recognition.compare_faces([img_encoding], kev_encoding):
+        print("Aum")
+    elif (face_recognition.compare_faces([img_encoding], kev_encoding))[0]:
         idx = 2
-    elif face_recognition.compare_faces([img_encoding], rus_encoding):
+        print("Kevin")
+    elif (face_recognition.compare_faces([img_encoding], quoc_encoding))[0]:
+        idx = 1
+        print("Quoc")
+    elif (face_recognition.compare_faces([img_encoding], rus_encoding))[0]:
         idx = 3
+        print("Russell")
     else:
-        idx = 0
+        idx = 3
+        print("Unknown≈")
 
         # if name == "Aum" or name == "Quoc" or name == "Kevin" or name == "Russell" or name == "unknown":
         #     if (name == "Aum"):
