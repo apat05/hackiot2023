@@ -24,6 +24,8 @@ def main():
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
 def ultrasonic():
 
+    TRIG = 21
+    ECHO = 20
     GPIO.setup(TRIG,GPIO.OUT)
     GPIO.setup(ECHO,GPIO.IN)
     GPIO.output(TRIG,False)
