@@ -44,12 +44,8 @@ def main():
             #increment the identified person's number
             people[id] += 1
         
-    #    while range != default_range: #so that the counter doesn't continue to update while person is putting dish in
-     #       range = ultrasonic()
-=======
         while range < default_range - 10 and range > 0: #so that the counter doesn't continue to update while person is putting dish in
             range = ultrasonic()
->>>>>>> 8ff47d1c8e28547c2f8d6922c6c72cf1d5ddfb73
             
             
 #Source: https://www.kitflix.com/how-to-interface-raspberry-pi-with-ultrasonic-sensor
