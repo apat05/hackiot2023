@@ -54,7 +54,7 @@ def main():
         range = ultrasonic()
         print(range)
         if((range < default_range - 10) and (range > 10)):
-            idx = main_video.capture()
+            idx = main_video.captureimage()
             print(idx)
 
             #increment the identified person's number
